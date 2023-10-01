@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreatePartCodesTable extends Migration
+class CreatePartsCodesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,13 @@ class CreatePartCodesTable extends Migration
      */
     public function up()
     {
-        Schema::create('part_codes', function (Blueprint $table) {
+        Schema::create('parts_codes', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('part_id');
-            $table->string('code');
+            $table->unsignedBigInteger('code_id');
             $table->integer('quantity')->default(0);
-            $table->timestamps();
             $table->foreign('part_id')->references('id')->on('parts')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreign('code_id')->references('id')->on('codes')->onDelete('cascade')->onUpdate('cascade');
         });
     }
 
@@ -30,6 +30,6 @@ class CreatePartCodesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('part_codes');
+        Schema::dropIfExists('parts_codes');
     }
 }

@@ -2,11 +2,19 @@
 
 namespace App\Http\Controllers;
 
+use App\Imports\PartsImport;
 use App\Models\Part;
 use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
 
 class PartController extends Controller
 {
+    public function import()
+    {
+        Excel::import(new PartsImport(), 'parts.xlsx');
+
+        return redirect('/')->with('success', 'All good!');
+    }
     /**
      * Display a listing of the resource.
      *

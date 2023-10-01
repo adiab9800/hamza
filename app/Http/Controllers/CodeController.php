@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\PartCode;
+use App\Models\Code;
 use Illuminate\Http\Request;
 
-class PartCodeController extends Controller
+class CodeController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -41,10 +41,10 @@ class PartCodeController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\PartCode  $partCode
+     * @param  \App\Models\Code  $code
      * @return \Illuminate\Http\Response
      */
-    public function show(PartCode $partCode)
+    public function show(Code $code)
     {
         //
     }
@@ -52,10 +52,10 @@ class PartCodeController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\PartCode  $partCode
+     * @param  \App\Models\Code  $code
      * @return \Illuminate\Http\Response
      */
-    public function edit(PartCode $partCode)
+    public function edit(Code $code)
     {
         //
     }
@@ -64,10 +64,10 @@ class PartCodeController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\PartCode  $partCode
+     * @param  \App\Models\Code  $code
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, PartCode $partCode)
+    public function update(Request $request, Code $code)
     {
         //
     }
@@ -75,10 +75,10 @@ class PartCodeController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\PartCode  $partCode
+     * @param  \App\Models\Code  $code
      * @return \Illuminate\Http\Response
      */
-    public function destroy(PartCode $partCode)
+    public function destroy(Code $code)
     {
         //
     }

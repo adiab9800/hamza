@@ -16,7 +16,7 @@ class CreatePartsTable extends Migration
         Schema::create('parts', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('plan_id');
-            $table->string('code');
+            $table->string('number');
             $table->string('description')->nullable();
             $table->string('length')->nullable();
             $table->string('type')->nullable();
