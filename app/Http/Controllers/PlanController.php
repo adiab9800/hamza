@@ -2,84 +2,71 @@
 
 namespace App\Http\Controllers;
 
+use App\Imports\PartsImport;
+use App\Models\Code;
 use App\Models\Plan;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Validation\ValidationException;
+use Maatwebsite\Excel\Facades\Excel;
 
 class PlanController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
-        //
+        $plans = Plan::orderBy('id','desc')->get();
+        return view('plans.index',compact('plans'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
-        //
+        return view('plans.create');
     }
 
     /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @throws ValidationException
      */
     public function store(Request $request)
     {
-        //
+        $this->validate(
+            $request,
+            [
+                'plan' => ['required','mimes:xlsx,xls']
+            ]
+        );
+        try {
+            DB::beginTransaction();
+            Excel::import(new PartsImport(), $request->file('plan'));
+            DB::commit();
+            return redirect(route('plans.index'))->with('success', 'plan saved successfully');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return back()->with('error', 'something went wrong please try again');
+        }
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Plan  $plan
-     * @return \Illuminate\Http\Response
-     */
     public function show(Plan $plan)
     {
-        //
+        $codes = Code::whereHas('parts',function($query) use ($plan) {
+            $query->where('plan_id',$plan->id);
+        })->get();
+        return view('plans.show', compact('plan','codes'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Plan  $plan
-     * @return \Illuminate\Http\Response
-     */
+
     public function edit(Plan $plan)
     {
         //
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Plan  $plan
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, Plan $plan)
     {
         //
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Plan  $plan
-     * @return \Illuminate\Http\Response
-     */
     public function destroy(Plan $plan)
     {
-        //
+        $plan->delete();
+        return back()->with('success','plan deleted successfully');
     }
 }

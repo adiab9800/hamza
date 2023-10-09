@@ -3,17 +3,37 @@
 namespace App\Http\Controllers;
 
 use App\Imports\PartsImport;
+use App\Imports\WeekPlanImport;
 use App\Models\Part;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Facades\Excel;
 
 class PartController extends Controller
 {
     public function import()
     {
-        Excel::import(new PartsImport(), 'parts.xlsx');
+        try {
+            DB::beginTransaction();
+            Excel::import(new PartsImport(), 'parts.xlsx');
+            DB::commit();
+            return redirect('/')->with('success', 'All good!');
+        } catch (\Exception $e) {
+            DB::rollBack();
+        }
 
-        return redirect('/')->with('success', 'All good!');
+    }
+
+    public function importWeek()
+    {
+        try {
+            DB::beginTransaction();
+            Excel::import(new WeekPlanImport(), 'week-plan.xlsx');
+            DB::commit();
+            return redirect('/')->with('success', 'All good!');
+        } catch (\Exception $e) {
+            DB::rollBack();
+        }
     }
     /**
      * Display a listing of the resource.
