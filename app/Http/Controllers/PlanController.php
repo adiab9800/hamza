@@ -36,7 +36,8 @@ class PlanController extends Controller
         );
         try {
             DB::beginTransaction();
-            Excel::import(new PartsImport(), $request->file('plan'));
+            $plan = Plan::create([]);
+            Excel::import(new PartsImport($plan), $request->file('plan'));
             DB::commit();
             return redirect(route('plans.index'))->with('success', 'plan saved successfully');
         } catch (\Exception $e) {

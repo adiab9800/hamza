@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\PartController;
 use App\Http\Controllers\PlanController;
 use App\Http\Controllers\WeekPlanController;
 use Illuminate\Support\Facades\Route;
@@ -18,6 +19,6 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('index');
 });
-Route::get('week-plan/import', [\App\Http\Controllers\PartController::class, 'importWeek']);
 Route::resource('plans',PlanController::class);
 Route::resource('week-plans', WeekPlanController::class);
+Route::get('week-plans/show-parts/{week_plan}', [WeekPlanController::class,'showParts'])->name('week-plans.showParts');

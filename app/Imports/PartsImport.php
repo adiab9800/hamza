@@ -6,9 +6,10 @@ use App\Models\Code;
 use App\Models\Part;
 use App\Models\Plan;
 use Illuminate\Support\Collection;
+use Maatwebsite\Excel\Concerns\SkipsEmptyRows;
 use Maatwebsite\Excel\Concerns\ToCollection;
 
-class PartsImport implements ToCollection
+class PartsImport implements ToCollection,SkipsEmptyRows
 {
     protected $headers = [
         'Part No',
@@ -16,6 +17,11 @@ class PartsImport implements ToCollection
         'Length (mm)',
         'Part Type'
     ];
+    protected Plan $plan;
+    public function __construct(Plan $plan)
+    {
+        $this->plan = $plan;
+    }
 
     public function collection(Collection $collection)
     {
@@ -26,18 +32,21 @@ class PartsImport implements ToCollection
             if (in_array($field, $this->headers)) {
                 $header[$index] = $field;
             } else {
-                $codes[$index] = $this->saveCode($field);
+                if (! is_null($field)) {
+                    $field = str_replace(['-', ' '], '', $field);
+                    $codes[$index] = $this->saveCode($field);
+                }
             }
         }
 
 
-        $plan = Plan::create([]);
+        
         foreach ($collection as $key =>$row) {
             //skip header
             if ($key === 0) {
                 continue;
             }
-            $this->savePart($row, $header, $codes, $plan);
+            $this->savePart($row, $header, $codes, $this->plan);
         }
     }
     protected function saveCode(string $code) {

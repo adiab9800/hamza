@@ -16,6 +16,7 @@
           <th>ID</th>
           <th>created at</th>
           <th>view</th>
+          <th>number of parts</th>
           <th>Delete</th>
         </tr>
       </thead>
@@ -26,6 +27,9 @@
             <td>{{$weekPlan->created_at}}</td>
               <td>
                   <a class="btn btn-success" href="{{route('week-plans.show',$weekPlan->id)}}">view</a>
+              </td>
+              <td>
+                  <a class="btn btn-success" href="{{route('week-plans.showParts',$weekPlan->id)}}">view</a>
               </td>
             <td>
                 <form action="{{route('week-plans.destroy',$weekPlan)}}" method="POST">

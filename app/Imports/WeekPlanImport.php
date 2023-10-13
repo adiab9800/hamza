@@ -43,7 +43,7 @@ class WeekPlanImport implements ToCollection
             foreach ($shifts as $shift) {
                 $data[] = [
                     'day' => $day,
-                    'shift' => $shift,
+                    'shift' => str_replace(' ','',$shift),
                     'quantity' => null
                 ];
             }

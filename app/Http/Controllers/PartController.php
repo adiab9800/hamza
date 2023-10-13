@@ -11,30 +11,6 @@ use Maatwebsite\Excel\Facades\Excel;
 
 class PartController extends Controller
 {
-    public function import()
-    {
-        try {
-            DB::beginTransaction();
-            Excel::import(new PartsImport(), 'parts.xlsx');
-            DB::commit();
-            return redirect('/')->with('success', 'All good!');
-        } catch (\Exception $e) {
-            DB::rollBack();
-        }
-
-    }
-
-    public function importWeek()
-    {
-        try {
-            DB::beginTransaction();
-            Excel::import(new WeekPlanImport(), 'week-plan.xlsx');
-            DB::commit();
-            return redirect('/')->with('success', 'All good!');
-        } catch (\Exception $e) {
-            DB::rollBack();
-        }
-    }
     /**
      * Display a listing of the resource.
      *
