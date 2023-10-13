@@ -71,6 +71,32 @@
                 <td>{{$part->Thu_shift_2}}</td>
                 <td>{{$part->Thu_shift_3}}</td>
             </tr>
+            <tr>
+                <td style="height: 40px;"></td>
+                <td style="height: 40px;"></td>
+                <td style="height: 40px;"></td>
+                <td style="height: 40px;"></td>
+
+                <td style="height: 40px;"></td>
+                <td style="height: 40px;"></td>
+                <td style="height: 40px;"></td>
+
+                <td style="height: 40px;"></td>
+                <td style="height: 40px;"></td>
+                <td style="height: 40px;"></td>
+
+                <td style="height: 40px;"></td>
+                <td style="height: 40px;"></td>
+                <td style="height: 40px;"></td>
+
+                <td style="height: 40px;"></td>
+                <td style="height: 40px;"></td>
+                <td style="height: 40px;"></td>
+
+                <td style="height: 40px;"></td>
+                <td style="height: 40px;"></td>
+                <td style="height: 40px;"></td>
+            </tr>
         @endforeach
       </tbody>
     </table>
